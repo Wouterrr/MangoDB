@@ -74,7 +74,7 @@ class MangoDB {
 		if ( isset($username) && isset($password))
 		{
 			// Add Username & Password to server string
-			$hostnames = $username . ':' . $password . '@' . $hostnames;
+			$hostnames = $username . ':' . $password . '@' . $hostnames . '/' . $database;
 		}
 
 		if ( strpos($hostnames, 'mongodb://') !== 0)
