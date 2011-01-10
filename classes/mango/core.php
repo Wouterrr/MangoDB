@@ -1062,7 +1062,7 @@ abstract class Mango_Core implements Mango_Interface {
 			}
 
 			// Validate
-			if ( ! $array->check())
+			if ( ! $array->check(TRUE))
 			{
 				// Validation failed
 				throw new Mango_Validate_Exception($this->_model,$array);
