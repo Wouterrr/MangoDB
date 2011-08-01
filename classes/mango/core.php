@@ -37,7 +37,12 @@ abstract class Mango_Core implements Mango_Interface {
 			if ( self::$_cti === NULL)
 			{
 				// load extension config
-				self::$_cti = Kohana::config('mangoCTI');
+				
+                if (substr(Kohana::VERSION,0,3) >= 3.2) {
+                    self::$_cti = Kohana::$config->load('mangoCTI');
+                } else {
+                    self::$_cti = Kohana::config('mangoCTI');
+                }
 			}
 
 			while ( isset(self::$_cti[$name]))
