@@ -40,7 +40,12 @@ class MangoDB {
 			if ($config === NULL)
 			{
 				// Load the configuration for this database
-				$config = Kohana::config('mangoDB')->$name;
+				
+                if (substr(Kohana::VERSION,0,3) >= 3.2) {
+                    $config = Kohana::$config->load('mangoDB')->$name;
+                } else {
+                    $config = Kohana::config('mangoDB')->$name;
+                }
 			}
 
 			new MangoDB($name,$config);
