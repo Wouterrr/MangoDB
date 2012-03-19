@@ -1252,7 +1252,15 @@ abstract class Mango_Core implements Mango_Interface {
 				$data->rules($name, $field['rules']);
 			}
 		}
-
+		
+		if (isset($this->_labels))
+		{
+			foreach ($this->_labels as $name => $field)
+			{
+				$data->label($name, $field);
+			}			
+		}
+		
 		return $data;
 	}
 
