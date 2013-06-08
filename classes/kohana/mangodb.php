@@ -65,7 +65,7 @@ class Kohana_MangoDB {
 	// Connected
 	protected $_connected;
 
-	// Mongo object
+	// MongoClient object
 	protected $_connection;
 
 	// MongoDB object
@@ -89,7 +89,7 @@ class Kohana_MangoDB {
 		}
 
 		// create Mongo object (but don't connect just yet)
-		$this->_connection = new Mongo($server, array('connect' => FALSE) + $options);
+		$this->_connection = new MongoClent($server, array('connect' => FALSE) + $options);
 
 		// connect
 		if ( Arr::get($options, 'connect', TRUE))
@@ -132,16 +132,24 @@ class Kohana_MangoDB {
 	}
 
 	/**
-	 * Disconnect from database
+	 * Forcefully closes a connection to the database,
+	 * even if persistent connections are being used.
 	 */
 	public function disconnect()
 	{
-		if ( $this->_connected)
+		if ($this->_connected)
 		{
-			$this->_connection->close();
-		}
+			$connections = $this->_connection->getConnections();
 
-		$this->_db = $this->_connected = NULL;
+			foreach ($connections as $connection)
+			{
+				// Close the connection to MongoDB
+				$this->_connection->close($connection['hash']);
+			}
+
+			$this->_db = NULL;
+			$this->_connected = FALSE;
+		}
 	}
 
 	/** Database Management */
@@ -149,7 +157,7 @@ class Kohana_MangoDB {
 	public function last_error()
 	{
 		return $this->_connected
-			? $this->_db->lastError() 
+			? $this->_db->lastError()
 			: NULL;
 	}
 
