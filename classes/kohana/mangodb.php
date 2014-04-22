@@ -89,7 +89,7 @@ class Kohana_MangoDB {
 		}
 
 		// create Mongo object (but don't connect just yet)
-		$this->_connection = new MongoClent($server, array('connect' => FALSE) + $options);
+		$this->_connection = new MongoClient($server, array('connect' => FALSE) + $options);
 
 		// connect
 		if ( Arr::get($options, 'connect', TRUE))
