@@ -113,9 +113,7 @@ class Kohana_MangoDB {
 			return TRUE;
 		}
 
-		$this->_connection->connect();
-
-		$this->_connected    = $this->_connection->connected;
+		$this->_connected    = $this->_connection->connect();
 		$this->_db           = $this->_connected
 			? $this->_connection->selectDB(Arr::path($this->_config, 'connection.options.db'))
 			: NULL;
