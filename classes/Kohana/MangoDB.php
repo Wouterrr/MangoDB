@@ -49,11 +49,11 @@ class Kohana_MangoDB {
 			if ($config === NULL)
 			{
 				// Load the configuration for this database
-				$config = Kohana::$config->load('mangoDB.' . $name);
+				$config = Kohana::$config->load('mangoDB');
 			}
 
 			// Store the database instance
-			MangoDB::$instances[$name] = new MangoDB($name,$config);
+			MangoDB::$instances[$name] = new MangoDB($name,$config[$name]);
 		}
 
 		return self::$instances[$name];
